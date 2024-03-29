@@ -3,20 +3,21 @@
 import { useEffect, useState } from "react";
 import FetchUser from "@/app/api/fetchUser/fetchUser";
 import CreateB2b from "./CreateBussness/page";
-import {supabaseForClientComponent} from "@/lib/supabase.client";
+import { supabaseForClientComponent } from "@/lib/supabase.client";
 
 export default function Dashboard() {
   const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
-  const [createNewBusinessModalOpen, setCreateNewBusinessModalOpen] = useState(false);
+  const [createNewBusinessModalOpen, setCreateNewBusinessModalOpen] =
+    useState(false);
   // define an object that store all the businesses
   const [businesses, setBusinesses] = useState<any[]>([]);
 
-type B2B = {
-  name: string;
-  email: string;
-  created_at: string;
-};
+  type B2B = {
+    name: string;
+    email: string;
+    created_at: string;
+  };
   useEffect(() => {
     const getCurrentUser = async () => {
       const user = await FetchUser();
@@ -26,89 +27,105 @@ type B2B = {
     getCurrentUser();
   }, [user]);
 
-  // fetch businesses from the database 
+  // fetch businesses from the database
   useEffect(() => {
     const getBusiness = async () => {
-      
-	const { data } = await supabaseForClientComponent
-		.from("business")
-		.select('*')
-    data?.map((business: B2B) => {
-      setBusinesses((prev) => [...prev, business]);
-    });
-    if (data)
-      setBusinesses(data);
-    }
+      const { data } = await supabaseForClientComponent
+        .from("business")
+        .select("*");
+      data?.map((business: B2B) => {
+        setBusinesses((prev) => [...prev, business]);
+      });
+      if (data) setBusinesses(data);
+    };
     getBusiness();
-
-
   }, [user]);
-
 
   return (
     <>
-    <div className="p-4 bg-[#1f2b34] w-full">
-        <h1 className="text-2xl font-semibold text-white">Welcome, {user}</h1>
-    </div>
-    <div className="flex flex-row  w-full shadow-md rounded-lg">
-      <Aside />
+      <div className="p-4 bg-[#1f2b34] w-full mt-10 rounded-t-md">
+        <h1 className="text-2xl font-semibold text-white">
+          Welcome,{" "}
+          <span className="font-bold  uppercase text-red-500">{user}</span>
+        </h1>
+      </div>
+      <div className="flex flex-row  w-full shadow-md rounded-lg">
+        <Aside />
 
-      <section className="flex-1 flex flex-col md:p-6 w-full h-screen ">
-        <div className="grid gap-4 md:gap-6 ">
-          <div className="flex items-center gap-4 md:gap-6 border-b border-gray-300">
-            <h1 className="text-2xl font-semibold">Listings</h1>
-            <button
-              onClick={() => setCreateNewBusinessModalOpen(true)}
-              className="inline-flex items-center justify-center text-sm bg-[#2d3748] text-white font-bold rounded-md px-4 py-2"
+        <section className="flex-1 flex flex-col md:p-6 w-full h-screen ">
+          <div className="grid gap-4 md:gap-6 ">
+            <div className="flex items-center gap-4 md:gap-6 border-b border-gray-300 mt-4 p-5">
+              <h1 className="text-2xl font-semibold">Listings</h1>
+              <button
+                onClick={() => setCreateNewBusinessModalOpen(true)}
+                className="inline-flex items-center justify-center text-sm bg-[#2d3748] text-white font-bold rounded-md px-4 py-2"
+              >
+                Create new
+              </button>
+            </div>
+            <div
+              className="rounded-lg  shadow-sm  font-semibold text-sm
+             "
+              data-v0-t="card"
             >
-              Create new
-            </button>
-          </div>
-          <div className="rounded-lg  shadow-sm  " data-v0-t="card">
-            <div className="p-6">
-              <div className="overflow-hidden rounded-md shadow-lg">
-                <div className="relative w-full overflow-auto ">
-                  {createNewBusinessModalOpen && (
-                    <button
-                      onClick={() => setCreateNewBusinessModalOpen(false)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        strokeLinejoin="round"
-                        className="w-6 h-6"
+              <div className="p-6 md:flex grid ">
+                <div className="overflow-hidden rounded-md shadow-lg">
+                  <div className="relative w-full overflow-auto ">
+                    {createNewBusinessModalOpen && (
+                      <button
+                        onClick={() => setCreateNewBusinessModalOpen(false)}
                       >
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                    </button>
-                  )}
-                  <table className="w-full  text-sm">
-                    {
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          strokeLinejoin="round"
+                          className="w-6 h-6"
+                        >
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                      </button>
+                    )}
+                    <table className="w-[50vw]  text-sm ">
+                      {
+                        <>
+                          {!createNewBusinessModalOpen && (
+                            <>
+                              <HeaderListings />
+                              <Listings
+                                businesses={businesses}
+                                user={user}
+                                email={email}
+                              />
+                            </>
+                          )}
+                        </>
+                      }
+                    </table>
+                    {createNewBusinessModalOpen && (
                       <>
-                        {!createNewBusinessModalOpen && (
-                          <>
-                            <HeaderListings />
-                            <Listings businesses={businesses}  user={user} email={email} />
-                          </>
-                        )}
+                        <button
+                          className=" text-sm bg-[#2d3748] text-white font-bold rounded-md  py-2 absolute bottom-56 w-96 left-1/2 transform -translate-x-1/2"
+                          onClick={() => setCreateNewBusinessModalOpen(false)}
+                        >
+                          Cannel
+                        </button>
+                        <CreateB2b />
                       </>
-                    }
-                  </table>
-                  {createNewBusinessModalOpen && <CreateB2b />}
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
     </>
   );
 }
@@ -134,131 +151,100 @@ const HeaderListings = () => {
   );
 };
 
-const Listings = (
-  { businesses, user, email } : { businesses: any[], user: string, email: string}
-) => {
+const Listings = ({
+  businesses,
+  user,
+  email,
+}: {
+  businesses: any[];
+  user: string;
+  email: string;
+}) => {
+  const deleteBusiness = async (business: any) => {
+    const { data, error } = await supabaseForClientComponent
+      .from("business")
+      .delete()
+      .eq("name", business.name);
+    if (error) {
+      alert(error.message);
+      return error;
+    } else {
+      alert("Business Deleted");
+      window.location.reload();
+    }
+  };
   return (
     <tbody className="[&amp;_tr:last-child]:border-0">
-      {
-        businesses?.map((business) => {
-          return (
-            <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-              <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
-                {business?.name}
-              </td>
-              <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                {user}
-              </td>
-              <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                {email}
-              </td>
-              <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-                {business.created_at}
-              </td>
-              <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 flex justify-end gap-2">
-                <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    strokeLinejoin="round"
-                    className="w-4 h-4"
-                  >
-                    <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
-                  </svg>
-                  <span className="sr-only">Edit</span>
-                </button>
-                <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    strokeLinejoin="round"
-                    className="w-4 h-4"
-                  >
-                    <path d="M3 6h18"></path>
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                  </svg>
-                  <span className="sr-only">Delete</span>
-                </button>
-              </td>
-            </tr>
-          );
-        }
-      )}
-          
-          
-          </tbody>
-      );
+      {businesses?.map((business) => {
+        return (
+          <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
+              {business?.name}
+            </td>
+            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+              {user}
+            </td>
+            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+              {email}
+            </td>
+            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+              {business.created_at}
+            </td>
+            <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 flex justify-end gap-2">
+              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  strokeLinejoin="round"
+                  className="w-4 h-4"
+                >
+                  <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
+                </svg>
+                <span className="sr-only">Edit</span>
+              </button>
+              <button
+                onClick={() => {
+                  deleteBusiness(business);
+                }}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  strokeLinejoin="round"
+                  className="w-4 h-4"
+                >
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                </svg>
+                <span className="sr-only">Delete</span>
+              </button>
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  );
 };
-{/* <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-  <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
-    Acme Corporation
-  </td>
-  <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-    john@example.com
-  </td>
-  <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
-    2023-02-15 10:23 AM
-  </td>
-  <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 flex justify-end gap-2">
-    <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        strokeLinejoin="round"
-        className="w-4 h-4"
-      >
-        <path d="M4 13.5V4a2 2 0 0 1 2-2h8.5L20 7.5V20a2 2 0 0 1-2 2h-5.5"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
-      </svg>
-      <span className="sr-only">Edit</span>
-    </button>
-    <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        strokeLinejoin="round"
-        className="w-4 h-4"
-      >
-        <path d="M3 6h18"></path>
-        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-      </svg>
-      <span className="sr-only">Delete</span>
-    </button>
-  </td>
-</tr> */}
 
 const Aside = () => {
   return (
-    <aside className="w-64 bg-primary shadow-md h-screen">
+    <aside className="w-64 bg-primary shadow-md h-screen md:block hidden">
       <div className="flex items-center justify-between p-4">
         <a href="#" className="text-xl font-semibold text-primary-foreground">
           Dashboard

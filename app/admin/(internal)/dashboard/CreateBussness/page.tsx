@@ -23,7 +23,10 @@ async function createB2b(id: string, user_id: string, businessname: string) {
   return data;
 }
 
-export default function CreateB2b() {
+export default function CreateB2b(
+  
+
+) {
   const [creator, setCreator] = useState("");
   const [businessname, setbusinessname] = useState("");
   const [email, setEmail] = useState("");
@@ -37,10 +40,13 @@ export default function CreateB2b() {
     }
     const id = uuidv4(); // Generate a UUID for user_id
     const b2b = createB2b(id, user?.id, businessname);
-    console.log(b2b);
+
     setCreator("");
     setbusinessname("");
     setEmail("");
+    alert("Business Created")
+    window.location.reload()
+    
   };
   return (
     <div className="w-full h-96">
@@ -65,9 +71,11 @@ export default function CreateB2b() {
         <input
           type="submit"
           value="Submit"
-          className=" text-white font-bold p-2 rounded-lg mt-3 bg-[#2d3748]"
+          className=" text-white font-bold p-2 rounded-lg mt-3 bg-[#2d3748] cursor-pointer hover:bg-[#1a202c]"
+          
         />
       </form>
+
     </div>
   );
 }
