@@ -31,12 +31,12 @@ export default function CreateB2b() {
   const saveBusiness = async () => {
     const user = await FetchUser();
     if (user) setCreator(user?.app_metadata?.username);
+    if (!user) return alert("User not found");
     if (!businessname) {
       return alert("Please fill all fields");
     }
     const id = uuidv4(); // Generate a UUID for user_id
-
-    const b2b = createB2b(id, user.id, businessname);
+    const b2b = createB2b(id, user?.id, businessname);
     console.log(b2b);
     setCreator("");
     setbusinessname("");
