@@ -3,7 +3,6 @@
 "use server";
 
 import { createSupabaseForServerComponent } from "@/lib/supabase.server";
-import exp from "constants";
 
 const FetchAllUsers = async () => {
     const supabase = createSupabaseForServerComponent();
@@ -21,8 +20,6 @@ const FetchAllUsers = async () => {
 
 const FetchUser = async () => {
     
-    
-
 	const supabase = createSupabaseForServerComponent();
 
 	const {

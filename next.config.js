@@ -2,7 +2,7 @@
 const nextConfig = {
     // images 
     images: {
-        domains: ['img.freepik.com'],
+        domains: ['img.freepik.com', 'cdn-icons-png.flaticon.com'],
     },
 }
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { signupUsingPassword } from "@/lib/supabase.auth.client";
+import { signupUsingPassword, authenticateUsingPassword } from "@/lib/supabase.auth.client";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -27,15 +27,13 @@ export default function Login() {
   const handleLogin = async () => {
     // use authenticateUsingPassword instead of signInWithPassword
     //TODO:
-    const { error } = await supabase.auth.signInWithPassword({
-      email: form.email,
-      password: form.password,
-    });
-
-    if (error) {
+    const { error } = await authenticateUsingPassword({ email, password });
+		if (!error) {
+			router.push("/");
+			router.refresh();
+		}
+    else {
       alert(error.message);
-    } else {
-      router.push("/");
     }
   };
 
