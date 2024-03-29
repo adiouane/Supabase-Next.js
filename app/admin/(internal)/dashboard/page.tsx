@@ -33,11 +33,9 @@ type Business = {
 	const { data } = await supabaseForClientComponent
 		.from("Business")
 		.select('*')
-    console.log(data);
-    for (let i = 0; i < data?.length; i++) {
-      console.log(data[i]);
-      setBusinesses(data[i]);
-    }
+    data?.map((business: Business) => {
+      setBusinesses((prev) => [...prev, business]);
+    });
     setBusinesses(data); // data is an array of businesses
     }
     getBusiness();
