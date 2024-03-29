@@ -12,7 +12,7 @@ export default function Dashboard() {
   // define an object that store all the businesses
   const [businesses, setBusinesses] = useState<any[]>([]);
 
-type Business = {
+type B2B = {
   name: string;
   email: string;
   created_at: string;
@@ -33,10 +33,11 @@ type Business = {
 	const { data } = await supabaseForClientComponent
 		.from("Business")
 		.select('*')
-    data?.map((business: Business) => {
+    data?.map((business: B2B) => {
       setBusinesses((prev) => [...prev, business]);
     });
-    setBusinesses(data); // data is an array of businesses
+    if (data)
+      setBusinesses(data);
     }
     getBusiness();
 
