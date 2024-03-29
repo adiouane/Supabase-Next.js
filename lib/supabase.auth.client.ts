@@ -38,13 +38,13 @@ export async function authenticateUsingPassword(credentials: Supabase.SignInWith
 }
 
 
-export async function signupUsingPassword(props: { full_name: string; email: string; password: string; }) {
+export async function signupUsingPassword(props: { username: string; email: string; password: string; }) {
   return await supabaseForClientComponent.auth.signUp({
     email: props.email,
     password: props.password,
     options: {
       data: {
-        full_name: props.full_name,
+        username: props.username,
       },
     },
   });

@@ -1,10 +1,13 @@
 import { cookies } from "next/headers";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
-import { Database } from "./database.types";
+// import { Database } from "./database.types";
 import { env } from "./env.server";
 
-
+interface Database {
+  public: any;
+  private: any;
+}
 
 export const supabaseWithServiceRoleForServer = createClient<Database>(env.NEXT_PUBLIC_SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 

@@ -1,9 +1,13 @@
 "use client";
 
 import { createBrowserClient } from "@supabase/ssr";
-import { Database } from "./database.types";
+// import { Database } from "./database.types";
 import { env } from "./env.client";
 
+interface Database {
+  public: any;
+  private: any;
+}
 
 /**
  * In client components, import the `supabaseForClientComponent` variable and use it like this:
