@@ -3,7 +3,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import * as Supabase from "@supabase/supabase-js";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import { use, useState } from "react";
+import {  useState } from "react";
 import { signupUsingPassword } from "@/lib/supabase.auth.client";
 
 export default function Register() {

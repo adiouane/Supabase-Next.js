@@ -3,10 +3,13 @@ import React, { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { signupUsingPassword } from "@/lib/supabase.auth.client";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [username, setUsername] = useState("");
 
   const router = useRouter();
 
@@ -50,6 +53,22 @@ export default function Login() {
     }
   };
 
+  const handleRegister = async () => {
+    alert("register");
+    const {  error } : any = await signupUsingPassword({
+      username: username,
+      email,
+      password,
+    });
+    if (error) {
+      alert(error.message);
+    } else {
+      window.location.href = "/";
+      setIsSignedIn(true)
+    }
+  };
+  
+
   return (
     <>
       <div className="w-full flex items-center justify-center">
@@ -63,6 +82,26 @@ export default function Login() {
             </div>
             <div className="w-full space-y-4 sm:max-w-[400px]">
               <div className="space-y-2">
+                {
+                  isSignedIn && (
+                    <label
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      htmlFor="username"
+                    >
+                      Username
+                      <input 
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm "
+                        id="username"
+                        placeholder="John Doe"
+                        onChange={(e) => {
+                          setUsername(e.target.value);
+                        }}
+                      />
+                    </label>
+
+                    
+                  )
+                }
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   htmlFor="email"
@@ -94,18 +133,37 @@ export default function Login() {
                   }}
                 />
               </div>
-              <button
+              {
+                !isSignedIn &&
+                <button
                 onClick={handleLogin}
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-black text-white h-10"
-              >
+                >
                 Sign in
               </button>
-              <button
-                onClick={() => router.push("/sign-up")}
+              
+              }
+              {
+                !isSignedIn &&
+                <button
+                onClick={() => 
+                  setIsSignedIn(true)
+                }
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-white text-black h-10"
-              >
+                >
                 Sign up
               </button>
+              }
+              {
+                isSignedIn && (
+                  <button
+                  onClick={handleRegister} // Call handleRegister on click
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-white text-black h-10"
+                >
+                  Sign up
+                  </button>
+                )
+              }
             </div>
             <div className="w-full space-y-2 flex flex-col items-center justify-center">
               <a className="text-sm underline" href="#">
