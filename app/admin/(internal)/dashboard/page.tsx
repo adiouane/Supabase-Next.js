@@ -31,7 +31,7 @@ type B2B = {
     const getBusiness = async () => {
       
 	const { data } = await supabaseForClientComponent
-		.from("Business")
+		.from("business")
 		.select('*')
     data?.map((business: B2B) => {
       setBusinesses((prev) => [...prev, business]);
@@ -144,7 +144,7 @@ const Listings = (
           return (
             <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
               <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
-                {business?.Businessname}
+                {business?.name}
               </td>
               <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                 {user}
