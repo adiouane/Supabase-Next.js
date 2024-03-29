@@ -32,6 +32,9 @@ dependencies:
   use-debounce:
     specifier: ^10.0.0
     version: 10.0.0(react@18.2.0)
+  uuid:
+    specifier: ^9.0.1
+    version: 9.0.1
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -49,6 +52,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18
     version: 18.2.15
+  '@types/uuid':
+    specifier: ^9.0.8
+    version: 9.0.8
   autoprefixer:
     specifier: ^10.0.1
     version: 10.4.16(postcss@8.4.31)
@@ -514,6 +520,10 @@ packages:
   /@types/tough-cookie@4.0.5:
     resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
     dev: false
+
+  /@types/uuid@9.0.8:
+    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
+    dev: true
 
   /@types/ws@8.5.10:
     resolution: {integrity: sha512-vmQSUcfalpIq0R9q7uTo2lXs6eGIpt9wtnLdMv9LVpIjCA/+ufZRozlVoVelIYixx1ugCBKDhn89vnsEGOCx9A==}
