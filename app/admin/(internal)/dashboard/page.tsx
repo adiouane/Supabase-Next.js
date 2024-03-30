@@ -64,11 +64,11 @@ export default function Dashboard() {
               </button>
             </div>
             <div
-              className="rounded-lg  shadow-sm  font-semibold text-sm
+              className="rounded-lg  shadow-sm  font-semibold text-sm max-h-[50vh] overflow-auto
              "
               data-v0-t="card"
             >
-              <div className="p-6 lg:flex grid max-w-[80vw] sm:max-w-[100%] ">
+              <div className="p-6 lg:flex grid max-w-[80vw] sm:max-w-[100%]  ">
                 <div className="overflow-hidden rounded-md shadow-lg">
                   <div className="relative w-full overflow-auto ">
                     {createNewBusinessModalOpen && (
@@ -92,7 +92,7 @@ export default function Dashboard() {
                         </svg>
                       </button>
                     )}
-                    <table className="sm:w-[80vw]  w-full text-[#2d3748] font-semibold">
+                    <table className="sm:w-[80vw]  w-full text-[#2d3748] font-semibold ">
                       {
                         <>
                           {!createNewBusinessModalOpen && (

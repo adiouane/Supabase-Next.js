@@ -42,7 +42,7 @@ const Listings = ({
   };
 
   return (
-    <tbody className="[&amp;_tr:last-child]:border-0">
+    <tbody className="[&amp;_tr:last-child]:border-0 ">
       {businesses?.map((business) => {
         return (
           <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">

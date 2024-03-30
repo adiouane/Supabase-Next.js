@@ -5,8 +5,7 @@ import { supabaseForClientComponent } from "@/lib/supabase.client";
 import FetchUser from "@/app/api/fetchUser/fetchUser";
 import { v4 as uuidv4 } from "uuid";
 
-async function createB2b(id: string, user_id: string, businessname: string) {
-  console.log(businessname + id);
+async function createB2b(user_id: string, businessname: string) {
 
   const { data, error } = await supabaseForClientComponent
     .from("business")
@@ -38,13 +37,11 @@ export default function CreateB2b(
     if (!businessname) {
       return alert("Please fill all fields");
     }
-    const id = uuidv4(); // Generate a UUID for user_id
-    const b2b = createB2b(id, user?.id, businessname);
+    createB2b(user?.id, businessname);
 
     setCreator("");
     setbusinessname("");
     setEmail("");
-    alert("Business Created")
     window.location.reload()
     
   };
