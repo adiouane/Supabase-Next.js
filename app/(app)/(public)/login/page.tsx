@@ -32,7 +32,6 @@ export default function Login() {
     const { error } = await authenticateUsingPassword({ email, password });
     if (!error) {
       router.push("/");
-      // setIsSignedIn(true); // TODO: 
       router.refresh();
     } else {
       alert(error.message);
@@ -47,10 +46,11 @@ export default function Login() {
     if (error) {
       alert(error.message);
     } else {
+      // set ture to the user in local storage
+      localStorage.setItem("user", "true");
       router.push("/");
-      setIsSignedIn(true);
-      window.location.href = "/";
-
+      router.refresh();
+      window.location.reload();
     }
   };
 
