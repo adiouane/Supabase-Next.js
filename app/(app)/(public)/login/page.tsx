@@ -50,6 +50,7 @@ export default function Login() {
       // set ture to the user in local storage
       localStorage.setItem("user", "true");
       router.push("/");
+      window.location.reload();
     }
   };
 
@@ -90,7 +91,7 @@ export default function Login() {
                     <input
                       className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm "
                       id="username"
-                      placeholder="John Doe"
+                      placeholder="adiouane"
                       onChange={(e) => {
                         setUsername(e.target.value);
                       }}
