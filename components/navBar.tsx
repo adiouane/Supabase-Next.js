@@ -9,17 +9,25 @@ export default function NavBar() {
           B<span className="text-red-500 text-4xl">2</span>
           <span className="text-white text-2xl font-semibold">B</span>
         </h1>
-        <nav className="ml-auto flex items-center gap-4 md:gap-5">
-          <button>
-            <a
-              className=" text-white bg-red-500 px-4 py-2 rounded-md
-                "
-              href="/logout"
-            >
-              Logout
-            </a>
+        <div 
+          onClick={() => {
+            window.location.href = "/logout";
+          }}
+        className="ml-auto flex  gap-4 md:gap-5 cursor-pointer">
+  
+          <button className="text-white font-bold text-sm text-center">
+            Logout
           </button>
-        </nav>
+            <Image
+              src="https://cdn0.iconfinder.com/data/icons/user-interface-2063/24/UI_Essential_icon_expanded-57-512.png"
+              alt="logout"
+              width={20}
+              height={20}
+              className="object-cover  bg-red-300 rounded-full"
+            
+            />
+       
+        </div>
       </header>
     </nav>
   );
