@@ -44,14 +44,14 @@ export default function Dashboard() {
   }, [user]);
 
   return (
-    <>
-      <div className="p-4 bg-[#1f2b34] w-full rounded-t-md">
+    <div className="m-0 p-0">
+      <div className="p-4 bg-[#1f2b34] sm:w-[90vw] w-[70vw] rounded-t-md">
         <h1 className="text-2xl font-semibold text-white">
           Welcome,{" "}
           <span className="font-bold  uppercase text-red-500">{user}</span>
         </h1>
       </div>
-      <div className="flex flex-row  w-full shadow-md rounded-lg">
+      <div className="flex flex-row  sm:w-[90vw] w-[70vw] h-[70vh] shadow-md rounded-lg">
         <div className="flex-1 flex flex-col md:p-6 w-full h-full ">
           <div className="grid gap-4 md:gap-6 ">
             <div className="flex items-center gap-4 md:gap-6 border-b border-gray-300 mt-4 p-5">
@@ -69,7 +69,7 @@ export default function Dashboard() {
              "
               data-v0-t="card"
             >
-              <div className="p-6 lg:flex grid max-w-[80%] sm:max-w-[100%] ">
+              <div className="p-6 lg:flex grid max-w-[80vw] sm:max-w-[100%] ">
                 <div className="overflow-hidden rounded-md shadow-lg">
                   <div className="relative w-full overflow-auto ">
                     {createNewBusinessModalOpen && (
@@ -127,7 +127,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
