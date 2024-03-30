@@ -16,8 +16,6 @@ export default function Login() {
   const router = useRouter();
 
   const handleLogin = async () => {
-    // use authenticateUsingPassword instead of signInWithPassword
-    //TODO:
     const { error } = await authenticateUsingPassword({ email, password });
     if (!error) {
       router.push("/");
@@ -134,11 +132,6 @@ export default function Login() {
                   Sign up
                 </button>
               )}
-            </div>
-            <div className="w-full space-y-2 flex flex-col items-center justify-center">
-              <a className="text-sm underline" href="#">
-                Forgot your password?
-              </a>
             </div>
           </div>
         </div>
