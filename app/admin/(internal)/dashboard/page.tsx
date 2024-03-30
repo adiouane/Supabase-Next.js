@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import FetchUser from "@/app/api/fetchUser/fetchUser";
 import CreateB2b from "./CreateBussness/page";
 import { supabaseForClientComponent } from "@/lib/supabase.client";
-import { set } from "zod";
 import Listings from "@/components/listing";
 
 export default function Dashboard() {
