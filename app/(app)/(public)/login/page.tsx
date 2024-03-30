@@ -28,11 +28,11 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    // use authenticateUsingPassword instead of signInWithPassword
-    //TODO:
+
     const { error } = await authenticateUsingPassword({ email, password });
     if (!error) {
       router.push("/");
+      // setIsSignedIn(true); // TODO: 
       router.refresh();
     } else {
       alert(error.message);
@@ -47,15 +47,14 @@ export default function Login() {
     if (error) {
       alert(error.message);
     } else {
-      // set ture to the user in local storage
-      localStorage.setItem("user", "true");
       router.push("/");
-      router.refresh();
+      setIsSignedIn(true);
+      window.location.href = "/";
+
     }
   };
 
   const handleRegister = async () => {
-    alert("register");
     const { error }: any = await signupUsingPassword({
       username: username,
       email,
