@@ -28,7 +28,8 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-
+    // use authenticateUsingPassword instead of signInWithPassword
+    //TODO:
     const { error } = await authenticateUsingPassword({ email, password });
     if (!error) {
       router.push("/");
@@ -49,12 +50,11 @@ export default function Login() {
       // set ture to the user in local storage
       localStorage.setItem("user", "true");
       router.push("/");
-      router.refresh();
-      window.location.reload();
     }
   };
 
   const handleRegister = async () => {
+    alert("register");
     const { error }: any = await signupUsingPassword({
       username: username,
       email,
@@ -159,6 +159,7 @@ export default function Login() {
               </a>
             </div>
             <button
+              // sing up with google
               onClick={SingUpWithGoogle}
               className="inline-flex items-center justify-center  rounded-md text-sm font-medium  w-full bg-black text-white h-10"
             >
