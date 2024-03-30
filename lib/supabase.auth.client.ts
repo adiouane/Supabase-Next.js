@@ -8,16 +8,16 @@ import * as Supabase from "@supabase/supabase-js";
 export async function authenticateUsingGoogle(): Promise<never> {
   const redirectTo = `${env.NEXT_PUBLIC_ORIGIN}/api/supabase/auth/callback`;
 
-  console.error(``
-    + `Add this redirect url to the Supabase settings.\n`
-    + "Redirect URL:"
-    + redirectTo + "\n"
-    + "Supabase Settings:"
-    + `https://supabase.com/dashboard/project/_/auth/url-configuration`
-    + "After that, remove this error message from the code."
-  );
-  alert("Check the console log to fix this issue.");
-  throw new Error("Redirect URL not configured on Supabase.");
+  // console.error(``
+  //   + `Add this redirect url to the Supabase settings.\n`
+  //   + "Redirect URL:"
+  //   + redirectTo + "\n"
+  //   + "Supabase Settings:"
+  //   + `https://supabase.com/dashboard/project/_/auth/url-configuration`
+  //   + "After that, remove this error message from the code."
+  // );
+  // alert("Check the console log to fix this issue.");
+  // throw new Error("Redirect URL not configured on Supabase.");
 
   return await supabaseForClientComponent.auth.signInWithOAuth({
     provider: "google",

@@ -3,10 +3,7 @@ import React, { useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import {
-  signupUsingPassword,
-  authenticateUsingPassword,
-} from "@/lib/supabase.auth.client";
+import { signupUsingPassword, authenticateUsingPassword, authenticateUsingGoogle } from "@/lib/supabase.auth.client";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -31,32 +28,23 @@ export default function Login() {
     // use authenticateUsingPassword instead of signInWithPassword
     //TODO:
     const { error } = await authenticateUsingPassword({ email, password });
-    if (!error) {
-      router.push("/");
-      router.refresh();
-    } else {
+		if (!error) {
+			router.push("/");
+			router.refresh();
+		}
+    else {
       alert(error.message);
     }
   };
 
   const SingUpWithGoogle = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-
-    if (error) {
-      alert(error.message);
-    } else {
-      // set ture to the user in local storage
-      localStorage.setItem("user", "true");
-      router.push("/");
-      window.location.reload();
-    }
+    // use authenticateUsingGoogle instead of signInWithOAuth
+    await authenticateUsingGoogle();
   };
 
   const handleRegister = async () => {
     alert("register");
-    const { error }: any = await signupUsingPassword({
+    const {  error } : any = await signupUsingPassword({
       username: username,
       email,
       password,
@@ -65,9 +53,10 @@ export default function Login() {
       alert(error.message);
     } else {
       window.location.href = "/";
-      setIsSignedIn(true);
+      setIsSignedIn(true)
     }
   };
+  
 
   return (
     <>
@@ -82,22 +71,26 @@ export default function Login() {
             </div>
             <div className="w-full space-y-4 sm:max-w-[400px]">
               <div className="space-y-2">
-                {isSignedIn && (
-                  <label
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    htmlFor="username"
-                  >
-                    Username
-                    <input
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm "
-                      id="username"
-                      placeholder="adiouane"
-                      onChange={(e) => {
-                        setUsername(e.target.value);
-                      }}
-                    />
-                  </label>
-                )}
+                {
+                  isSignedIn && (
+                    <label
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      htmlFor="username"
+                    >
+                      Username
+                      <input 
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm "
+                        id="username"
+                        placeholder="John Doe"
+                        onChange={(e) => {
+                          setUsername(e.target.value);
+                        }}
+                      />
+                    </label>
+
+                    
+                  )
+                }
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   htmlFor="email"
@@ -129,30 +122,37 @@ export default function Login() {
                   }}
                 />
               </div>
-              {!isSignedIn && (
+              {
+                !isSignedIn &&
                 <button
-                  onClick={handleLogin}
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-black text-white h-10"
+                onClick={handleLogin}
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-black text-white h-10"
                 >
-                  Sign in
-                </button>
-              )}
-              {!isSignedIn && (
+                Sign in
+              </button>
+              
+              }
+              {
+                !isSignedIn &&
                 <button
-                  onClick={() => setIsSignedIn(true)}
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-white text-black h-10"
+                onClick={() => 
+                  setIsSignedIn(true)
+                }
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-white text-black h-10"
                 >
-                  Sign up
-                </button>
-              )}
-              {isSignedIn && (
-                <button
+                Sign up
+              </button>
+              }
+              {
+                isSignedIn && (
+                  <button
                   onClick={handleRegister} // Call handleRegister on click
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium  w-full bg-white text-black h-10"
                 >
                   Sign up
-                </button>
-              )}
+                  </button>
+                )
+              }
             </div>
             <div className="w-full space-y-2 flex flex-col items-center justify-center">
               <a className="text-sm underline" href="#">
