@@ -38,8 +38,12 @@ export default function Login() {
   };
 
   const SingUpWithGoogle = async () => {
-    // use authenticateUsingGoogle instead of signInWithOAuth
-    await authenticateUsingGoogle();
+    const google = await authenticateUsingGoogle();
+    if (google) {
+      console.log(google);
+      router.push("/");
+      router.refresh();
+    }
   };
 
   const handleRegister = async () => {
@@ -153,11 +157,6 @@ export default function Login() {
                   </button>
                 )
               }
-            </div>
-            <div className="w-full space-y-2 flex flex-col items-center justify-center">
-              <a className="text-sm underline" href="#">
-                Forgot your password?
-              </a>
             </div>
             <button
               // sing up with google
