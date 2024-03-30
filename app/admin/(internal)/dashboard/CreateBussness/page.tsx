@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { supabaseForClientComponent } from "@/lib/supabase.client";
 import FetchUser from "@/app/api/fetchUser/fetchUser";
-import { v4 as uuidv4 } from "uuid";
 
 async function createB2b(user_id: string, businessname: string) {
 

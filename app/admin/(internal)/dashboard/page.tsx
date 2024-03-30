@@ -40,6 +40,8 @@ export default function Dashboard() {
       if (data) setBusinesses(data);
     };
     getBusiness();
+
+
   }, [user]);
 
   return (
