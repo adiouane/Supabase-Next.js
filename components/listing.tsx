@@ -34,14 +34,8 @@ const Listings = ({
       .from("business")
       .update({ name: newBusiness })
       .eq("name", oldBusinessName);
-    if (error || !data) {
-      toast.error("An error occurred!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        toastId: "errorToast" // Optional: Unique ID for toast management
-      });      toast.error('An error occurred while updating the business');
+    if (error || !data) {    
+      toast.error('An error occurred while updating the business');
       return error;
     } else {
       console.log(data);
@@ -52,18 +46,18 @@ const Listings = ({
 
   const handleClick = (name: string, id: string) => {
     // set old business name to the input field
-    // alert(id);
     setOldBusinessName(name);
   };
   return (
+    <>
     <tbody className="[&amp;_tr:last-child]:border-0 ">
       {businesses?.map((business) => {
         return (
           <tr
-          key={business.id} 
-          onClick={() => handleClick(business.name, business.id)} // Pass business name to handler
+            key={business.id}
+            onClick={() => handleClick(business.name, business.id)} // Pass business name to handler
 
-          className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+            className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
             <td className="p-4 font-semibold text-green-700 text-base ">
               {business?.name}
             </td>
@@ -77,7 +71,7 @@ const Listings = ({
               <button
                 onClick={() => {
                   setIsEdit(!isEdit);
-                }}
+                } }
                 className="inline-flex flex-col items-center  justify-center whitespace-nowrap rounded-md h-10 w-10 bg-transparent hover:bg-green-600 hover:text-white"
               >
                 <svg
@@ -97,8 +91,8 @@ const Listings = ({
                   <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
                 </svg>
                 <span
-                  
-                className="sr-only">Edit</span>
+
+                  className="sr-only">Edit</span>
               </button>
               {isEdit && (
                 <div className="flex flex-col gap-2 absolute top-16 w-40 sm:96">
@@ -106,14 +100,11 @@ const Listings = ({
                     type="text"
                     className="rounded-lg p-2 text-sm font-medium  border border-gray-200 text-gray-400"
                     name="name"
-                    onChange={(e) => 
-
-                      setNewBusiness(e.target.value)}
-                  />
+                    onChange={(e) => setNewBusiness(e.target.value)} />
                   <button
                     onClick={() => {
                       editeBusiness();
-                    }}
+                    } }
                     className=" text-white font-bold p-2 rounded-lg mt-3 bg-[#2d3748] cursor-pointer hover:bg-[#1a202c]"
                   >
                     Submit
@@ -121,7 +112,7 @@ const Listings = ({
                   <button
                     onClick={() => {
                       setIsEdit(!isEdit);
-                    }}
+                    } }
                     className=" text-white font-bold p-2 rounded-lg bg-red-500 cursor-pointer hover:bg-red-600"
                   >
                     Cancel
@@ -132,7 +123,7 @@ const Listings = ({
               <button
                 onClick={() => {
                   deleteBusiness(business);
-                }}
+                } }
                 className="inline-flex items-center  justify-center whitespace-nowrap rounded-md  h-10 w-10 text-red-500 hover:bg-red-500 hover:text-white"
               >
                 <svg
@@ -157,8 +148,9 @@ const Listings = ({
           </tr>
         );
       })}
-      <ToastContainer />  
     </tbody>
+    <ToastContainer />
+    </>  
   );
 };
 
