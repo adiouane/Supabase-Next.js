@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
 import { supabaseForClientComponent } from "@/lib/supabase.client";
-import { set } from "zod";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Listings = ({
   businesses,
 }: {
@@ -17,8 +19,9 @@ const Listings = ({
       .from("business")
       .delete()
       .eq("name", business.name)
-    if (error) {
-      alert(error.message);
+    if (error || !data) {
+      // alert an toast message
+      toast.error('An error occurred while deleting the business');
       return error;
     } else {
       window.location.reload();
@@ -31,10 +34,18 @@ const Listings = ({
       .from("business")
       .update({ name: newBusiness })
       .eq("name", oldBusinessName);
-    if (error) {
-      alert(error.message);
+    if (error || !data) {
+      toast.error("An error occurred!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        toastId: "errorToast" // Optional: Unique ID for toast management
+      });      toast.error('An error occurred while updating the business');
       return error;
     } else {
+      console.log(data);
+    
       window.location.reload();
     }
   };
@@ -107,6 +118,14 @@ const Listings = ({
                   >
                     Submit
                   </button>
+                  <button
+                    onClick={() => {
+                      setIsEdit(!isEdit);
+                    }}
+                    className=" text-white font-bold p-2 rounded-lg bg-red-500 cursor-pointer hover:bg-red-600"
+                  >
+                    Cancel
+                  </button>
                 </div>
               )}
 
@@ -138,6 +157,7 @@ const Listings = ({
           </tr>
         );
       })}
+      <ToastContainer />  
     </tbody>
   );
 };

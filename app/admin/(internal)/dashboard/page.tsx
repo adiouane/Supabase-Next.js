@@ -16,8 +16,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchUser() {
       const user = await FetchUser();
-      if (user)
-        setIsSetUser(true);
+      if (user) setIsSetUser(true);
       setUser(user?.user_metadata.username);
     }
     fetchUser();
@@ -26,22 +25,15 @@ export default function Dashboard() {
   // fetch businesses from the database
   useEffect(() => {
     const getAllBusinesses = async () => {
-
       const { data } = await supabaseForClientComponent.from("business").select(
-        `
-          *,
-          users (
-            *
-          )
-          `
-          );
+        `*,
+        users (*)`
+      );
 
-          if (data) {
-            setBusinesses(data);
-            console.log("businesses", data);
-          }
-        };
-      
+      if (data) {
+        setBusinesses(data);
+      }
+    };
 
     getAllBusinesses();
   }, [user]);
