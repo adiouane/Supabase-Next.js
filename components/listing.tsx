@@ -21,7 +21,7 @@ const Listings = ({
       .eq("name", business.name)
     if (error || !data) {
       // alert an toast message
-      toast.error('An error occurred while deleting the business');
+      toast.error('This business cannot be deleted, Try delete your business');
       return error;
     } else {
       window.location.reload();
@@ -35,7 +35,7 @@ const Listings = ({
       .update({ name: newBusiness })
       .eq("name", oldBusinessName);
     if (error || !data) {    
-      toast.error('An error occurred while updating the business');
+      toast.error('This business cannot be updated, Try update your business');
       return error;
     } else {
       console.log(data);

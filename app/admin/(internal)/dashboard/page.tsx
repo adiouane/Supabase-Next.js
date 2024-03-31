@@ -26,12 +26,12 @@ export default function Dashboard() {
   useEffect(() => {
     const getAllBusinesses = async () => {
       const { data } = await supabaseForClientComponent.from("business").select(
-        `*,
-        users (*)`
+        `*,users (*)`
       );
 
       if (data) {
         setBusinesses(data);
+        console.log("businesses", data);
       }
     };
 
