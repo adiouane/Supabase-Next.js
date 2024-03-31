@@ -6,6 +6,9 @@ import {
   signupUsingPassword,
   authenticateUsingPassword,
 } from "@/lib/supabase.auth.client";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { set } from "zod";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,24 +21,30 @@ export default function Login() {
   const handleLogin = async () => {
     const { error } = await authenticateUsingPassword({ email, password });
     if (!error) {
+      toast.success('Logged in successfully');
       router.push("/");
+      setTimeout(() => {
       router.refresh();
+      }, 1000);
     } else {
-      alert(error.message);
+      toast.error('Invalid credentials');
     }
   };
 
   const handleRegister = async () => {
-    alert("register");
+    
     const { error }: any = await signupUsingPassword({
       username: username,
       email,
       password,
     });
     if (error) {
-      alert(error.message);
+      toast.error('Invalid credentials');
     } else {
-      window.location.href = "/";
+      toast.success('Account created successfully');
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
       setIsSignedIn(true);
     }
   };
@@ -146,6 +155,7 @@ export default function Login() {
           />
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

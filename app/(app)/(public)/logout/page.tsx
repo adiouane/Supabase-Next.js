@@ -2,6 +2,8 @@
 import { supabaseForClientComponent } from "@/lib/supabase.client";
 import Login from "../login/page";
 import {  useEffect } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Logout() {
 
@@ -12,9 +14,9 @@ export default function Logout() {
         const handleLogout = async () => {
             const { error } = await supabase.auth.signOut();
             if (error) {
-                alert(error.message);
+                toast.error('Error logging out');
             } else {
-                window.location.href = "/login";
+                toast.success('Logged out successfully');
             }
         };
         handleLogout();

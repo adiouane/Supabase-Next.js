@@ -31,7 +31,6 @@ export default function Dashboard() {
 
       if (data) {
         setBusinesses(data);
-        console.log("businesses", data);
       }
     };
 
