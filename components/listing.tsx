@@ -1,32 +1,31 @@
 "use client";
 import { useState } from "react";
 import { supabaseForClientComponent } from "@/lib/supabase.client";
+import { set } from "zod";
 const Listings = ({
   businesses,
-  user,
-  email,
 }: {
   businesses: any[];
-  user: string;
-  email: string;
 }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [newBusiness, setNewBusiness] = useState("");
+  const [oldBusinessName, setOldBusinessName] = useState("");
+  console.log("businesses2", businesses);
   const deleteBusiness = async (business: any) => {
     const { data, error } = await supabaseForClientComponent
       .from("business")
       .delete()
-      .eq("name", business.name);
+      .eq("name", business.name)
     if (error) {
       alert(error.message);
       return error;
     } else {
-      alert("Business Deleted");
       window.location.reload();
     }
   };
 
-  const editeBusiness = async (oldBusinessName: string) => {
+  const editeBusiness = async () => {
+    //FIXME: update business name SHOULD FIX
     const { data, error } = await supabaseForClientComponent
       .from("business")
       .update({ name: newBusiness })
@@ -35,22 +34,29 @@ const Listings = ({
       alert(error.message);
       return error;
     } else {
-      console.log(data);
-      alert("Business Updated");
       window.location.reload();
     }
   };
 
+  const handleClick = (name: string, id: string) => {
+    // set old business name to the input field
+    alert(id);
+    setOldBusinessName(name);
+  };
   return (
     <tbody className="[&amp;_tr:last-child]:border-0 ">
       {businesses?.map((business) => {
         return (
-          <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+          <tr
+          key={business.id} 
+          onClick={() => handleClick(business.name, business.id)} // Pass business name to handler
+
+          className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
             <td className="p-4 font-semibold text-green-700 text-base ">
               {business?.name}
             </td>
             <td className="p-4 font-semibold text-green-700 text-base ">
-              {email}
+              {business?.users.email}
             </td>
             <td className="p-4 font-semibold text-green-700 text-base ">
               {business.created_at}
@@ -58,6 +64,7 @@ const Listings = ({
             <td className="p-4 font-semibold  text-base  flex justify-end gap-2">
               <button
                 onClick={() => {
+                  alert(business?.name)
                   setIsEdit(!isEdit);
                 }}
                 className="inline-flex flex-col items-center  justify-center whitespace-nowrap rounded-md h-10 w-10 bg-transparent hover:bg-green-600 hover:text-white"
@@ -78,7 +85,9 @@ const Listings = ({
                   <polyline points="14 2 14 8 20 8"></polyline>
                   <path d="M10.42 12.61a2.1 2.1 0 1 1 2.97 2.97L7.95 21 4 22l.99-3.95 5.43-5.44Z"></path>
                 </svg>
-                <span className="sr-only">Edit</span>
+                <span
+                  
+                className="sr-only">Edit</span>
               </button>
               {isEdit && (
                 <div className="flex flex-col gap-2 absolute top-16 w-40 sm:96">
@@ -86,11 +95,13 @@ const Listings = ({
                     type="text"
                     className="rounded-lg p-2 text-sm font-medium  border border-gray-200 text-gray-400"
                     name="name"
-                    onChange={(e) => setNewBusiness(e.target.value)}
+                    onChange={(e) => 
+
+                      setNewBusiness(e.target.value)}
                   />
                   <button
                     onClick={() => {
-                      editeBusiness(business?.name);
+                      editeBusiness();
                     }}
                     className=" text-white font-bold p-2 rounded-lg mt-3 bg-[#2d3748] cursor-pointer hover:bg-[#1a202c]"
                   >

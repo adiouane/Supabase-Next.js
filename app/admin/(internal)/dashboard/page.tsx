@@ -1,47 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import FetchUser from "@/app/api/fetchUser/fetchUser";
 import CreateB2b from "./CreateBussness/page";
 import { supabaseForClientComponent } from "@/lib/supabase.client";
 import Listings from "@/components/listing";
+import FetchUser from "@/app/api/fetchUser/fetchUser";
 
 export default function Dashboard() {
   const [user, setUser] = useState("");
-  const [email, setEmail] = useState("");
   const [createNewBusinessModalOpen, setCreateNewBusinessModalOpen] =
     useState(false);
-  // define an object that store all the businesses
+  const [isSetUser, setIsSetUser] = useState(false);
   const [businesses, setBusinesses] = useState<any[]>([]);
 
-  type B2B = {
-    name: string;
-    email: string;
-    created_at: string;
-  };
   useEffect(() => {
-    const getCurrentUser = async () => {
+    async function fetchUser() {
       const user = await FetchUser();
-      setUser(user?.user_metadata?.username);
-      setEmail(user?.email ?? "");
-    };
-    getCurrentUser();
+      if (user)
+        setIsSetUser(true);
+      setUser(user?.user_metadata.username);
+    }
+    fetchUser();
   }, [user]);
 
   // fetch businesses from the database
   useEffect(() => {
-    const getBusiness = async () => {
-      const { data } = await supabaseForClientComponent
-        .from("business")
-        .select("*");
-      data?.map((business: B2B) => {
-        setBusinesses((prev) => [...prev, business]);
-      });
-      if (data) setBusinesses(data);
-    };
-    getBusiness();
+    const getAllBusinesses = async () => {
 
+      const { data } = await supabaseForClientComponent.from("business").select(
+        `
+          *,
+          users (
+            *
+          )
+          `
+          );
 
+          if (data) {
+            setBusinesses(data);
+            console.log("businesses", data);
+          }
+        };
+      
+
+    getAllBusinesses();
   }, [user]);
 
   return (
@@ -100,11 +102,7 @@ export default function Dashboard() {
                           {!createNewBusinessModalOpen && (
                             <>
                               <HeaderListings />
-                              <Listings
-                                businesses={businesses}
-                                user={user}
-                                email={email}
-                              />
+                              <Listings businesses={businesses} />
                             </>
                           )}
                         </>

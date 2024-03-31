@@ -18,6 +18,9 @@ const FetchAllUsers = async () => {
 
 
 
+
+
+
 const FetchUser = async () => {
     
 	const supabase = createSupabaseForServerComponent();
@@ -34,3 +37,4 @@ const FetchUser = async () => {
 export default FetchUser;
 
 export { FetchAllUsers };
+
