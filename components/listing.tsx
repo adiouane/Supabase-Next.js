@@ -10,7 +10,8 @@ const Listings = ({
   const [isEdit, setIsEdit] = useState(false);
   const [newBusiness, setNewBusiness] = useState("");
   const [oldBusinessName, setOldBusinessName] = useState("");
-  console.log("businesses2", businesses);
+
+
   const deleteBusiness = async (business: any) => {
     const { data, error } = await supabaseForClientComponent
       .from("business")
@@ -25,7 +26,7 @@ const Listings = ({
   };
 
   const editeBusiness = async () => {
-    //FIXME: update business name SHOULD FIX
+
     const { data, error } = await supabaseForClientComponent
       .from("business")
       .update({ name: newBusiness })
@@ -40,7 +41,7 @@ const Listings = ({
 
   const handleClick = (name: string, id: string) => {
     // set old business name to the input field
-    alert(id);
+    // alert(id);
     setOldBusinessName(name);
   };
   return (
@@ -64,7 +65,6 @@ const Listings = ({
             <td className="p-4 font-semibold  text-base  flex justify-end gap-2">
               <button
                 onClick={() => {
-                  alert(business?.name)
                   setIsEdit(!isEdit);
                 }}
                 className="inline-flex flex-col items-center  justify-center whitespace-nowrap rounded-md h-10 w-10 bg-transparent hover:bg-green-600 hover:text-white"
