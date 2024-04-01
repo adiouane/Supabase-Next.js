@@ -19,12 +19,15 @@ const Listings = ({
       .from("business")
       .delete()
       .eq("name", business.name)
-    if (error || !data) {
+    if (error) {
       // alert an toast message
       toast.error('This business cannot be deleted, Try delete your business');
       return error;
     } else {
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      toast.success('Business deleted successfully');
     }
   };
 
@@ -34,13 +37,14 @@ const Listings = ({
       .from("business")
       .update({ name: newBusiness })
       .eq("name", oldBusinessName);
-    if (error || !data) {    
+    if (error) {    
       toast.error('This business cannot be updated, Try update your business');
       return error;
     } else {
-      console.log(data);
-    
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      toast.success('Business updated successfully');
     }
   };
 

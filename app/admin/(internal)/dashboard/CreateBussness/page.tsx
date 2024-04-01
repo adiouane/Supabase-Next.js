@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { supabaseForClientComponent } from "@/lib/supabase.client";
 import FetchUser from "@/app/api/fetchUser/fetchUser";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 async function createB2b(user_id: string, businessname: string) {
 
@@ -41,7 +43,10 @@ export default function CreateB2b(
     setCreator("");
     setbusinessname("");
     setEmail("");
-    window.location.reload()
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+    toast.success('Business Added successfully');
     
   };
   return (
@@ -71,6 +76,7 @@ export default function CreateB2b(
           
         />
       </form>
+      <ToastContainer />
 
     </div>
   );
